@@ -1,0 +1,7 @@
+@use "../../styles/scss/variables/color" as *;
+
+.title {
+    width: 100%;
+    text-align: center;
+    color: $white;
+}

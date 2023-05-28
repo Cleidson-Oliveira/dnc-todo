@@ -1,0 +1,37 @@
+@use "../../styles/scss/variables/color" as *;
+
+.tasks-table {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    width: 70%;
+    margin: auto;
+    
+}
+.tasks-table__head { 
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 2px $white solid;
+
+    & p {
+        padding: 2rem;
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+    }
+}
+
+.tasks-table__row { 
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: .5rem 2rem;
+    color: white;
+
+    & button {
+        background-color: transparent;
+        border: none;
+    }
+}

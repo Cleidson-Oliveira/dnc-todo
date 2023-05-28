@@ -1,0 +1,6 @@
+{
+    "tasks": [
+        { "id": 1, "title": "install json-server", "isDone": true },
+        { "id": 2, "title": "add custon hooks", "isDone": true }
+    ]
+}

@@ -1,0 +1,25 @@
+@use './scss/variables/color' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: $gray900;
+}
+
+h1, h2 {
+    font-family: 'Poppins', sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
