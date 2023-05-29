@@ -1,0 +1,28 @@
+.form {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 2rem;
+
+    & input {
+        background-color: transparent;
+        border: none;
+        font-size: 1rem;
+        color: white; 
+        
+        &::placeholder {
+            color: white; 
+            font-style: italic;
+        }
+        
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    & button {
+        background-color: transparent;
+        padding: .5rem;
+        border: none;
+    }
+}
