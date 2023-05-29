@@ -1,14 +1,54 @@
+import { useState } from "react";
+import { AddTaskForm } from "../add-task-form";
+import { Checkbox } from "../checkbox";
+import { Modal } from "../modal";
+import { useTasks } from "../../hooks/useTasks";
 import editIcon from "../../assets/pencil.svg";
 import trashIcon from "../../assets/trash.svg";
-import { useTasks } from "../../hooks/useTasks";
-import { Checkbox } from "../checkbox";
 import "./style.scss";
 
-interface TasksTableProps {}
+export function TasksTable () {
 
-export function TasksTable (props: TasksTableProps) {
+    const paginationInterval = 10;
 
-    const { tasks } = useTasks();
+    const [deleteTaskModalIsOpen, setDeleteTaskModalIsOpen] = useState(false);
+    const [editTaskModalIsOpen, setEditTaskModalIsOpen] = useState(false);
+    const [taskName, setTaskName] = useState("");
+    const [handleItemId, setHandledItemId] = useState<number>(0);
+    const [pagination, setPagination] = useState(0);
+
+    const { tasks, removeTask, addTask, setTaskAsDone, editTaskName } = useTasks();
+
+    const handleCreateNewTask = (nameTask: string) => {
+        addTask(nameTask);
+    }
+
+    const handleEditTask = () => {
+        if (taskName === "") return;
+
+        editTaskName(handleItemId, taskName);
+        setTaskName("");
+        handleEditTaskModalIsOpen();
+    }
+
+    const handleDeleteTask = () => {
+        removeTask(handleItemId);
+        handleDeleteTaskModalIsOpen();
+    }
+
+    const handleTaskStatus = (id: number) => {
+        setTaskAsDone(id);
+    }
+
+    const handleDeleteTaskModalIsOpen = (id?: number) => {
+        if(id) setHandledItemId(id);
+        setDeleteTaskModalIsOpen(prevState => !prevState);
+    }
+
+    const handleEditTaskModalIsOpen = (id?: number) => {
+        if(id) setHandledItemId(id);
+        setEditTaskModalIsOpen(prevState => !prevState);
+    }
 
     return (
         <div className="tasks-table">
@@ -18,20 +58,50 @@ export function TasksTable (props: TasksTableProps) {
                 <p>Opções</p>
             </div>
 
-            { tasks.map((task) => (
+            { tasks.length === 0 
+                ? <div className="tasks-table__row">Lista vazia. Adicione uma tarefa abaixo.</div>
+                : tasks.slice(pagination * paginationInterval, (pagination + 1) * paginationInterval).map((task) => (
                 <div key={task.id} className="tasks-table__row">
-                    <p>
+                    <p className="name">
                         {task.title}
                     </p>
 
-                    <Checkbox />
+                    <Checkbox className="status" onChangeStatus={() => handleTaskStatus(task.id)} />
                     
-                    <div>
-                        <button> <img src={editIcon}/> </button>
-                        <button> <img src={trashIcon}/> </button>
+                    <div className="controls">
+                        <button
+                            onClick={() => handleEditTaskModalIsOpen(task.id)}
+                        > 
+                            <img src={editIcon}/> 
+                        </button>
+                        <button
+                            onClick={() => handleDeleteTaskModalIsOpen(task.id)}
+                        >  
+                            <img src={trashIcon}/> 
+                        </button>
                     </div>
                 </div>
             ))}
+
+            <AddTaskForm onCreateNewTask={handleCreateNewTask} />
+
+            <Modal modalIsOpen={deleteTaskModalIsOpen}>
+                <h1>Deseja excluir esse item?</h1>
+                <p>Realmente deseja excluir este item?</p>
+                <div>
+                    <button onClick={handleDeleteTask}>Sim</button>
+                    <button onClick={() => handleDeleteTaskModalIsOpen()}>Não</button>
+                </div>
+            </Modal>
+
+            <Modal modalIsOpen={editTaskModalIsOpen}>
+                <h1>Deseja renomear esse item?</h1>
+                <input type="text" value={taskName} onChange={(e) => setTaskName(e.target.value) }/>
+                <div>
+                    <button onClick={handleEditTask}>Sim</button>
+                    <button onClick={() => handleEditTaskModalIsOpen()}>Não</button>
+                </div>
+            </Modal>
 
         </div>
     )

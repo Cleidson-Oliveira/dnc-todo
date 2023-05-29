@@ -1,21 +1,18 @@
+import { ReactNode } from "react";
+
 import "./styles.scss";
 
 interface ModalProps {
-    title: string,
-    description: string
+    children: ReactNode
+    modalIsOpen?: boolean
 }
 
-export function Modal ({description, title}: ModalProps) {
-
+export function Modal ({ children, modalIsOpen=false }: ModalProps) {
+    
     return (
-        <div className="outside-modal">
+        <div className={`outside-modal ${modalIsOpen ? "" : "closed"}`}>
             <div className="modal">
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <div>
-                    <button>Sim</button>
-                    <button>Não</button>
-                </div>
+                {children}
             </div>
         </div>
     )

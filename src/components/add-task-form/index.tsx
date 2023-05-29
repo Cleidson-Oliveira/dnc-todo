@@ -10,6 +10,13 @@ export function AddTaskForm ({ onCreateNewTask }: AddTaskFormProps) {
 
     const [nameTask, setNameTask] = useState<string>("");
 
+    const handleCreateTask = () => {
+        if (nameTask === "") return;
+        
+        onCreateNewTask(nameTask);
+        setNameTask("");
+    }
+
     return (
         <div className="form" >
             <input 
@@ -18,7 +25,7 @@ export function AddTaskForm ({ onCreateNewTask }: AddTaskFormProps) {
                 value={nameTask} 
                 onChange={(e) => setNameTask(e.target.value)}
             />
-            <button onClick={() => onCreateNewTask(nameTask)}>
+            <button onClick={handleCreateTask}>
                 <img src={add} />
             </button>
         </div>

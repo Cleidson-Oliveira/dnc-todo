@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState, ButtonHTMLAttributes } from "react";
 import uncheckedIcon from "../../assets/checkbox-blank.svg";
 import checkedIcon from "../../assets/checkbox-full.svg";
 
-interface CheckboxProps {
-    onChange?(): void
+interface CheckboxProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    onChangeStatus?(): void
 }
 
-export function Checkbox ({ onChange }: CheckboxProps) {
+export function Checkbox ({ onChangeStatus, ...props }: CheckboxProps) {
 
     const [ checked, setChecked ] = useState(false)
 
     const handleCheck = () => {
         setChecked(prevState => !prevState);
 
-        if ( onChange ) {
-            onChange();
+        if ( onChangeStatus ) {
+            onChangeStatus();
         }
     }
 
     return (
-        <button onClick={handleCheck}>
+        <button onClick={handleCheck} {...props} >
             { 
                 checked 
                 ? <img src={checkedIcon} />
