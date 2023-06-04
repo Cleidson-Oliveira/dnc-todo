@@ -14,8 +14,7 @@ export function TasksTable () {
     const [deleteTaskModalIsOpen, setDeleteTaskModalIsOpen] = useState(false);
     const [editTaskModalIsOpen, setEditTaskModalIsOpen] = useState(false);
     const [taskName, setTaskName] = useState("");
-    const [handleItemId, setHandledItemId] = useState<number>(0);
-    const [pagination, setPagination] = useState(0);
+    const [handleItemId, setHandledItemId] = useState<string>("");
 
     const { tasks, removeTask, addTask, setTaskAsDone, editTaskName } = useTasks();
 
@@ -36,16 +35,16 @@ export function TasksTable () {
         handleDeleteTaskModalIsOpen();
     }
 
-    const handleTaskStatus = (id: number) => {
+    const handleTaskStatus = (id: string) => {
         setTaskAsDone(id);
     }
 
-    const handleDeleteTaskModalIsOpen = (id?: number) => {
+    const handleDeleteTaskModalIsOpen = (id?: string) => {
         if(id) setHandledItemId(id);
         setDeleteTaskModalIsOpen(prevState => !prevState);
     }
 
-    const handleEditTaskModalIsOpen = (id?: number) => {
+    const handleEditTaskModalIsOpen = (id?: string) => {
         if(id) setHandledItemId(id);
         setEditTaskModalIsOpen(prevState => !prevState);
     }
@@ -60,13 +59,17 @@ export function TasksTable () {
 
             { tasks.length === 0 
                 ? <div className="tasks-table__row">Lista vazia. Adicione uma tarefa abaixo.</div>
-                : tasks.slice(pagination * paginationInterval, (pagination + 1) * paginationInterval).map((task) => (
+                : tasks.map((task) => (
                 <div key={task.id} className="tasks-table__row">
                     <p className="name">
                         {task.title}
                     </p>
 
-                    <Checkbox className="status" onChangeStatus={() => handleTaskStatus(task.id)} />
+                    <Checkbox 
+                        className="status" 
+                        onChangeStatus={() => handleTaskStatus(task.id)} 
+                        isChecked={task.completed}
+                    />
                     
                     <div className="controls">
                         <button

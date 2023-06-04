@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "../lib/axios";
+import {v4 as uuid} from "uuid"
 
 export interface ITask {
-    id: number,
+    id: string,
     title: string,
     completed: boolean
 }
@@ -11,10 +11,12 @@ interface TUseTasks {
     tasks: ITask[],
     isLoading: boolean,
     addTask(newTaskTitle: string): void, 
-    removeTask(id: number): void,
-    setTaskAsDone(id: number): void,
-    editTaskName(id: number, newTitle: string): void
+    removeTask(id: string): void,
+    setTaskAsDone(id: string): void,
+    editTaskName(id: string, newTitle: string): void
 }
+
+const TASKS_KEY = "@dnc-Todo";
 
 export function useTasks (): TUseTasks {
     
@@ -22,26 +24,35 @@ export function useTasks (): TUseTasks {
     const [ isLoading, setIsLoading ] = useState(true);
 
     const getTasks = async () => {
-        const tasks = await axios.get<ITask[]>("/todos");
+        const tasks: ITask[] = JSON.parse(localStorage.getItem(TASKS_KEY)!) || [];
+        console.log(tasks)
         
-        setTasks(tasks.data);
+        setTasks(tasks);
     }
 
     const addTask = async (newTaskTitle: string) => {
-        const createdTask = await axios.post<ITask>("/todos", {
-            title: newTaskTitle, isDone: false
-        });
+        const newTask: ITask = {
+            id: uuid(),
+            title: newTaskTitle,
+            completed: false,
+        }
+
+        localStorage.setItem(TASKS_KEY, JSON.stringify([newTask, ...tasks]))
 
         setTasks(prevState => {
             return [
-                createdTask.data,
+                newTask,
                 ...prevState,
             ]
         });
     }
 
-    const removeTask = async (id: number) => {
-        const deletedTask = await axios.delete<ITask>(`/todos/${id}`);
+    const removeTask = async (id: string) => {
+        const filteredTasks = tasks.filter(task => {
+            return task.id !== id;
+        })
+
+        localStorage.setItem(TASKS_KEY, JSON.stringify(filteredTasks))
 
         setTasks(prevState => {
             const newTasksState = prevState.filter(task => task.id != id);
@@ -50,10 +61,12 @@ export function useTasks (): TUseTasks {
         })
     }
 
-    const setTaskAsDone = (id: number) => {
-        const handleTask = tasks.find(task => task.id === id);
+    const setTaskAsDone = (id: string) => {
+        const updatedTasks = tasks.map(task => {
+            return task.id === id ? {...task, completed: !task.completed} : task
+        })
 
-        axios.patch(`/todos/${id}`, { completed: !handleTask?.completed });
+        localStorage.setItem(TASKS_KEY, JSON.stringify(updatedTasks))
 
         setTasks(prevState => {
             const newState = prevState.map(task => {
@@ -64,8 +77,13 @@ export function useTasks (): TUseTasks {
         })
     }
     
-    const editTaskName = (id: number, newTitle: string) => {
-        axios.patch(`/todos/${id}`, { title: newTitle });
+    const editTaskName = (id: string, newTitle: string) => {
+
+        const updatedTasks = tasks.map(task => {
+            return task.id === id ? {...task, title: newTitle} : task
+        })
+
+        localStorage.setItem(TASKS_KEY, JSON.stringify(updatedTasks));
 
         setTasks(prevState => {
             const newState = prevState.map(task => {
