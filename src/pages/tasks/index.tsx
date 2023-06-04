@@ -1,15 +1,12 @@
 import {useState} from "react";
-import { Header } from "../components/header";
-import { Modal } from "../components/modal";
-import { TasksTable } from "../components/tasks-table";
-import { Title } from "../components/title";
+import { Header } from "../../components/header";
+import { Modal } from "../../components/modal";
+import { TasksTable } from "../../components/tasks-table";
+import { Title } from "../../components/title";
 
 import "./style.scss";
-import { useTasks } from "../hooks/useTasks";
 
-export function Home () {
-
-
+export function Tasks () {
 
     return (
         <div className="container">

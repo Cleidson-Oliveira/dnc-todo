@@ -1,10 +1,10 @@
-import { Home } from "./pages/home";
+import { Router } from "./routes";
 
 function App() {
 
   return (
     <div className="App">
-      <Home />
+      <Router></Router>
     </div>
   )
 }
