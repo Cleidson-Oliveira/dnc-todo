@@ -3,15 +3,13 @@ import uncheckedIcon from "../../assets/checkbox-blank.svg";
 import checkedIcon from "../../assets/checkbox-full.svg";
 
 interface CheckboxProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    onChangeStatus?(): void
+    onChangeStatus?(): void,
+    isChecked: boolean
 }
 
-export function Checkbox ({ onChangeStatus, ...props }: CheckboxProps) {
-
-    const [ checked, setChecked ] = useState(false)
+export function Checkbox ({ onChangeStatus, isChecked, ...props }: CheckboxProps) {
 
     const handleCheck = () => {
-        setChecked(prevState => !prevState);
 
         if ( onChangeStatus ) {
             onChangeStatus();
@@ -21,7 +19,7 @@ export function Checkbox ({ onChangeStatus, ...props }: CheckboxProps) {
     return (
         <button onClick={handleCheck} {...props} >
             { 
-                checked 
+                isChecked 
                 ? <img src={checkedIcon} />
                 : <img src={uncheckedIcon} />
             }
