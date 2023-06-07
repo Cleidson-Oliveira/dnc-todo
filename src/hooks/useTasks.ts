@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {v4 as uuid} from "uuid"
 
 export interface ITask {
     id: string,
     title: string,
-    completed: boolean
+    completed: boolean,
+    organizationId: string
 }
 
 interface TUseTasks {
     tasks: ITask[],
     isLoading: boolean,
-    addTask(newTaskTitle: string): void, 
+    addTask(newTaskTitle: string, organizationId: string): void, 
     removeTask(id: string): void,
     setTaskAsDone(id: string): void,
     editTaskName(id: string, newTitle: string): void
 }
 
-const TASKS_KEY = "@dnc-Todo";
+const TASKS_KEY = "@dnc-todo-tasks";
 
 export function useTasks (): TUseTasks {
     
@@ -30,11 +32,12 @@ export function useTasks (): TUseTasks {
         setTasks(tasks);
     }
 
-    const addTask = async (newTaskTitle: string) => {
+    const addTask = (newTaskTitle: string, organizationId: string) => {
         const newTask: ITask = {
             id: uuid(),
             title: newTaskTitle,
             completed: false,
+            organizationId
         }
 
         localStorage.setItem(TASKS_KEY, JSON.stringify([newTask, ...tasks]))
@@ -47,7 +50,7 @@ export function useTasks (): TUseTasks {
         });
     }
 
-    const removeTask = async (id: string) => {
+    const removeTask = (id: string) => {
         const filteredTasks = tasks.filter(task => {
             return task.id !== id;
         })

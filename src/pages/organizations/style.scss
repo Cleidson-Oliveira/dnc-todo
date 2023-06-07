@@ -4,3 +4,61 @@
     gap: 3rem;
     padding-bottom: 5rem;
 }
+
+.mainContent {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    flex-direction: column;
+    margin: auto;
+    gap: 1rem;
+}
+
+.createNewOrganization {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 300px;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: #ffffff35;
+
+    & input {
+        color: white;
+    }
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    color: white;
+}
+
+.organizationsList {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    color: white;
+
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .5rem 1rem;
+        border-radius: 4px;
+        background-color: #ffffff35;
+    }
+    
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+ 
+}
+
+.buttonDelete {
+    padding: 0;
+    background-color: transparent;
+}

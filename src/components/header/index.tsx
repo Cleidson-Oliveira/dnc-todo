@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import "./style.scss"
 
 interface HeaderProps {
@@ -10,7 +11,7 @@ export function Header ({ page }: HeaderProps) {
         <header className="header">
             <ul className="menu">
                 <li className={page === "organizations" ? "menu__item--active" : "menu__item"}>
-                    Organizações
+                    <Link to="/">Organizações</Link>
                 </li>
                 <li className={page === "tasks" ? "menu__item--active" : "menu__item"}>
                     Tarefas

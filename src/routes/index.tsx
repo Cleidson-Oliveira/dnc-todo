@@ -7,7 +7,7 @@ export function Router () {
         <BrowserRouter>
             <Routes>
                 <Route path="/" Component={Organizations} />
-                <Route path="/tasks" Component={Tasks} />
+                <Route path="/tasks/:organizarionId" Component={Tasks} />
             </Routes>
         </BrowserRouter>
     )
