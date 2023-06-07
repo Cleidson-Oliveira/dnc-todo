@@ -7,8 +7,10 @@ As tarefas são salvas em localstorage e são listadas para o usuário.
 
 ## Funcionalidades
 
+- Criar "organizações" para as tarefas
+- Remover organizações 
 - Adicionar nova tarefa
-- Listar tarefas
+- Listar tarefas específicas para cada organização
 - Marcar tarefa como concluída
 - Renomear tarefas
 - Remover tarefas
