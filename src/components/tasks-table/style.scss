@@ -48,3 +48,14 @@
         border: none;
     }
 }
+
+@media screen and (max-width : 600px) {
+
+    .tasks-table {
+        width: 100%;
+    }
+
+    .tasks-table__head p {
+        padding: 1rem;
+    }
+}

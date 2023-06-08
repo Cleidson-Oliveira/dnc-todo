@@ -36,3 +36,9 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .header {
+        justify-content: center;
+        padding: 0;
+    }
+}

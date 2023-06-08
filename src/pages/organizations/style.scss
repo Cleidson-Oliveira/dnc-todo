@@ -51,14 +51,19 @@ label {
     }
     
     a {
+        flex-grow: 1;
         text-decoration: none;
         color: inherit;
     }
-
- 
 }
 
 .buttonDelete {
     padding: 0;
     background-color: transparent;
+}
+
+@media screen and (max-width : 600px) {
+    .mainContent {
+        width: unset;
+    }
 }
