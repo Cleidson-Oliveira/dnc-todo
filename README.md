@@ -23,6 +23,19 @@ As tarefas são salvas em localstorage e são listadas para o usuário.
 - [Typescript](https://www.typescriptlang.org/docs/)
 - [SASS](https://sass-lang.com)
 
+## Páginas
+
+### Organizações
+
+Página responsável pela criação e listagem de organizações para separar as tarefas.
+
+### Tarefas
+
+Página responsável pela criação e listagem das tarefas de cada organização.
+
+## Fluxo da aplicação
+
+<img src="./screenshots/dnc-todo-screenshot.gif" /><br />
 
 ## Como testar o projeto?
 
